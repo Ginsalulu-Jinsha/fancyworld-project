@@ -36,13 +36,13 @@ const Detail = ({windowHeight}) =>{
                 <Col span={2}></Col>
                 <Col span={12}>
                     <Description camp={camp}/>
-                    <Divider plain>最新评论</Divider>
+                    <Divider plain>💬 Reviews</Divider>
                     <Comments campID={searchParams.get("id")} />
                 </Col>
                 <Col span={7} offset={1}>
-                    <Divider plain>营地图片</Divider>
+                    <Divider plain>📷 Photos</Divider>
                     <Imgs imgs={camp.imgs}/>
-                    <Divider plain>位置信息</Divider>
+                    <Divider plain>📍 Location</Divider>
                     <Maps latlng={{lat:camp.lat,lng:camp.lng}} zoom = {6}/>
                 </Col>
                 <Col span={2}></Col>
@@ -58,12 +58,12 @@ const Description = ({camp}) => {
             <Row><h1>{camp.title}</h1></Row>
             <Row style={{marginTop:"10px", lineHeight:"35px"}}>
                 <Col span={6}><Rate disabled defaultValue={camp.stars} value={camp.stars} /></Col>
-                <Col span={4}><span>平均评分 {camp.stars} 分</span></Col>
-                <Col span={4}>共 {camp.comments} 条评论</Col>
-                <Col offset={1}> {moment(camp.time*1000).format('YYYY-MM-DD HH:mm')} 发布</Col>
+                <Col span={4}><span>⭐ {camp.stars} / 5</span></Col>
+                <Col span={4}>💬 {camp.comments} reviews</Col>
+                <Col offset={1}>🗓 {moment(camp.time*1000).format('YYYY-MM-DD HH:mm')}</Col>
             </Row>
-            <Row style={{marginTop:"10px"}}><h3>地址：{camp.address}</h3></Row>
-            <Row style={{marginTop:"10px"}}><h3>营地描述：</h3></Row>
+            <Row style={{marginTop:"10px"}}><h3>📍 {camp.address}</h3></Row>
+            <Row style={{marginTop:"10px"}}><h3>✨ About this experience</h3></Row>
             <Row style={{marginTop:"10px"}}><span>{camp.desc}</span></Row>
         </div>
     );
@@ -117,9 +117,9 @@ const Comments = ({campID}) =>{
                     <List.Item>
                         <Typography>
                             <Paragraph>
-                                <span>用户：{item.user}</span>
-                                <span style={{marginLeft:"20px"}}>评分: {item.stars}</span>
-                                <span style={{marginLeft:"20px"}}>时间: {moment(item.time*1000).format("YYYY-MM-DD HH:mm")}</span>
+                                <span>👤 {item.user}</span>
+                                <span style={{marginLeft:"20px"}}>⭐ {item.stars} / 5</span>
+                                <span style={{marginLeft:"20px"}}>🗓 {moment(item.time*1000).format("YYYY-MM-DD HH:mm")}</span>
                             </Paragraph>
                             <Text>{item.desc}</Text>
                         </Typography>
@@ -168,19 +168,19 @@ const CommentButton = ({campID, addEventCallbackFunc}) => {
 
     return (
         <div>
-            <Button type="primary" size="small" onClick={handelShowModal}>评论</Button>
-            <Modal title="评论回复" open={show} onOk={handelOkModal} onCancel={handelCancelModal}>
-                <Row>
-                    <Col span={3}>用户名：</Col>
-                    <Col span={18}><Input size="small" value={user} onChange={e=>{ e.persist(); setUser(e.target.value); }} /></Col>
+            <Button type="primary" size="small" onClick={handelShowModal}>💬 Add a Review</Button>
+            <Modal title="💕 Leave a Review" open={show} onOk={handelOkModal} onCancel={handelCancelModal}>
+                <Row style={{marginBottom:"10px"}}>
+                    <Col span={5}>Your Name:</Col>
+                    <Col span={18}><Input size="small" value={user} onChange={e=>{ e.persist(); setUser(e.target.value); }} placeholder="e.g. Sophie ✨"/></Col>
                 </Row>
-                <Row>
-                    <Col span={3}>评分：</Col>
+                <Row style={{marginBottom:"10px"}}>
+                    <Col span={5}>Rating:</Col>
                     <Col span={18}><Rate value={stars} onChange={setStars}/></Col>
                 </Row>
                 <Row>
-                    <Col span={3}>评论：</Col>
-                    <Col span={18}><TextArea row={4} value={desc} onChange={e => { e.persist(); setDesc(e.target.value);}}/></Col>
+                    <Col span={5}>Review:</Col>
+                    <Col span={18}><TextArea row={4} value={desc} onChange={e => { e.persist(); setDesc(e.target.value);}} placeholder="Share your fancy experience 💗"/></Col>
                 </Row>
             </Modal>
         </div>

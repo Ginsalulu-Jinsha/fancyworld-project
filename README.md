@@ -1,8 +1,19 @@
-# Girly Experience Review App
+# 💕 Fancy World — Girly Experience Review App
 
-A full-stack girl life experience (dining, shopping, skin care, nail, hair ... everything about lovely girls)  review platform desiged for girls where users can discover, share, and review restaurants with interactive maps and photo uploads.
+A full-stack girl-life experience review platform designed exclusively for girls.
+Discover, share, and review everything lovely — dining, shopping, skincare, nails, hair, and every beautiful moment in between.
 
-## Tech Stack
+## ✨ Features
+
+- Browse fancy experience stories with ratings and photos
+- Post new stories with location pin on Google Maps
+- Upload up to 6 photos per post
+- View experience detail page with image carousel and map
+- Leave comments and star ratings
+- Redis caching for fast detail page loading
+- Image deduplication via MD5 hash
+
+## 🛠 Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
@@ -10,19 +21,10 @@ A full-stack girl life experience (dining, shopping, skin care, nail, hair ... e
 | Backend | Django 4.2, Python 3.13 |
 | Database | MongoDB (main data), Redis (cache) |
 
-## Features
-
-- Browse restaurant listings with ratings and photos
-- Post new restaurant stories with location pin on Google Maps
-- Upload up to 6 photos per restaurant
-- View restaurant detail page with image carousel and map
-- Leave comments and star ratings
-- Redis caching for fast detail page loading
-
-## Project Structure
+## 📁 Project Structure
 
 ```
-restaurant-project/
+fancyworld-project/
 ├── server/                  # Django backend
 │   ├── app/
 │   │   ├── apps.py          # API views (list, add, detail, comments, upload)
@@ -38,14 +40,19 @@ restaurant-project/
 └── web/                     # React frontend
     ├── public/
     └── src/
-        ├── App.js
+        ├── App.js           # Root component & routing
+        ├── Head.js          # Navigation bar
+        ├── Body.js          # Home page — experience card grid
+        ├── Detail.js        # Experience detail page
+        ├── New.js           # Post new experience modal
         ├── Map.js           # Google Maps component
-        ├── New.js           # Add new restaurant modal
-        ├── Detail.js        # Restaurant detail page
-        └── About.js
+        ├── About.js         # About page
+        └── Foot.js          # Footer
 ```
 
-## Prerequisites
+## 🚀 Getting Started
+
+### Prerequisites
 
 - Python 3.13+
 - Node.js 16+
@@ -53,13 +60,11 @@ restaurant-project/
 - Redis (running on port 6379)
 - Google Maps JavaScript API key
 
-## Getting Started
-
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/<your-username>/restaurant-project.git
-cd restaurant-project
+git clone https://github.com/Ginsalulu-Jinsha/fancyworld-project.git
+cd fancyworld-project
 ```
 
 ### 2. Start the Backend
@@ -74,15 +79,14 @@ pip install -r requirement.txt
 DJANGO_SETTINGS_MODULE=server.settings_dev python manage.py runserver
 ```
 
-The backend will be available at `http://localhost:8000`
+Backend runs at `http://localhost:8000`
 
 ### 3. Configure Frontend Environment
 
-Create a `.env` file in the `web/` directory:
+Create a `.env` file inside the `web/` directory:
 
-```bash
-cd web
-echo "REACT_APP_GOOGLE_MAPS_KEY=your_google_maps_api_key" > .env
+```
+REACT_APP_GOOGLE_MAPS_KEY=your_google_maps_api_key
 ```
 
 > Get a Google Maps API key from [Google Cloud Console](https://console.cloud.google.com) with **Maps JavaScript API** enabled.
@@ -95,31 +99,33 @@ npm install
 npm start
 ```
 
-The frontend will be available at `http://localhost:3000`
+Frontend runs at `http://localhost:3000`
 
-## API Endpoints
+## 🌐 API Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/list` | Get all restaurants |
-| POST | `/api/add` | Add a new restaurant |
-| GET | `/api/detail?id=<id>` | Get restaurant detail |
-| GET | `/api/comments?campID=<id>` | Get comments for a restaurant |
+| GET | `/api/list` | Get all experience posts |
+| POST | `/api/add` | Add a new experience post |
+| GET | `/api/detail?id=<id>` | Get post detail |
+| GET | `/api/comments?campID=<id>` | Get comments for a post |
 | POST | `/api/comment/add` | Add a comment |
 | POST | `/api/upload` | Upload an image |
 | GET | `/api/file?id=<id>` | Retrieve an image |
 
-## Database
+## 🗄 Database
 
-MongoDB database name: `yelpcamp`
-
-Collections:
-- `camps` — restaurant entries
+MongoDB collections:
+- `camps` — experience posts
 - `comments` — user reviews
 - `images` — uploaded photos (stored as binary)
 
-## Notes
+## 🔒 Notes
 
 - The `.env` file is excluded from version control to protect your API keys.
-- Redis caching is enabled by default for restaurant detail pages (1 hour TTL).
+- Redis caching is enabled by default for detail pages (1 hour TTL).
 - Image deduplication is handled via MD5 hash before storing to MongoDB.
+
+---
+
+*Made with 💕 by Jinsha — because life should always be fancy.*
