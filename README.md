@@ -1,6 +1,6 @@
-# Restaurant Review App
+# Girly Experience Review App
 
-A full-stack restaurant review platform where users can discover, share, and review restaurants with interactive maps and photo uploads.
+A full-stack girl life experience (dining, shopping, skin care, nail, hair ... everything about lovely girls)  review platform desiged for girls where users can discover, share, and review restaurants with interactive maps and photo uploads.
 
 ## Tech Stack
 
