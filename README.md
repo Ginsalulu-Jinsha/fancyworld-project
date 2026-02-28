@@ -77,8 +77,8 @@ DJANGO_SETTINGS_MODULE=server.settings_dev python manage.py runserver
 
 To populate your database with real USA shop data from Google:
 
-1. Open `server/fetch_shops.py`.
-2. Replace `YOUR_GOOGLE_PLACES_API_KEY` with your key.
+1. Create a `.env` file in the `server/` directory.
+2. Add your API key: `GOOGLE_PLACES_API_KEY=your_key_here`.
 3. Run the script:
    ```bash
    cd server

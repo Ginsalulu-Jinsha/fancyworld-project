@@ -2,18 +2,20 @@ import os
 import django
 import time
 import requests
+from dotenv import load_dotenv
 
 # Initialize Django environment
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'server.settings_dev')
 django.setup()
 
+# Load environment variables from .env file
+load_dotenv()
+
 from app.pymongo import MongoDB
 from django.conf import settings
 
-# ==========================================
-# IMPORTANT: REPLACE WITH YOUR GOOGLE API KEY
-# ==========================================
-API_KEY = 'AIzaSyC5JwOOOGxwT-qBp8w1dY20_3Uyrm_3K1Y' 
+# Get API key from environment variable
+API_KEY = os.getenv('GOOGLE_PLACES_API_KEY') 
 BASE_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json"
 
 def fetch_places(query, target_count, api_key):
