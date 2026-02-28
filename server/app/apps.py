@@ -41,8 +41,13 @@ def findCommentByCampID(id):
 # 获取营地列表
 @require_http_methods('GET')
 def list(request):
+    category = request.GET.get("category", "")
+    query = {}
+    if category:
+        query["category"] = category
+
     camps = []
-    datas = pymongo.MongoDB.camps.find({}, {"_id":1, "title":1, "stars":1, "desc":1, "imgs":1}).sort("time", -1).limit(100)
+    datas = pymongo.MongoDB.camps.find(query, {"_id":1, "title":1, "stars":1, "desc":1, "imgs":1, "category":1}).sort("time", -1).limit(100)
     for data in datas:
         camps.append({
             "id": str(data["_id"]),
@@ -50,6 +55,7 @@ def list(request):
             "stars": int(data["stars"]),
             "desc": data["desc"],
             "imgs": data["imgs"],
+            "category": data.get("category", ""),
         })
     return response(0, "ok", camps)
 

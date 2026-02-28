@@ -1,9 +1,17 @@
 import { useState, useEffect } from 'react';
-import { Layout, List, Rate, message } from 'antd';
+import { Layout, List, Rate, message, Tabs } from 'antd';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 
 const { Content } = Layout;
+
+const CATEGORIES = [
+    { key: '', label: 'All ✨' },
+    { key: 'women_clothing', label: 'Fashion 👗' },
+    { key: 'nail_salon', label: 'Nails 💅' },
+    { key: 'beauty_store', label: 'Beauty 💄' },
+    { key: 'hair_salon', label: 'Hair 💇' },
+];
 
 const HeartSvg = ({ size = 16, color = '#e91e8c' }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill={color} xmlns="http://www.w3.org/2000/svg">
@@ -98,7 +106,9 @@ const FancyCard = ({ item }) => {
                             transform: hovered ? 'scale(1.05)' : 'scale(1)',
                             transition: 'transform 0.35s ease',
                         }}
-                        src={`${axios.defaults.baseURL}/api/file?id=${item.imgs[0]}`}
+                        src={item.imgs[0].startsWith('http') 
+                            ? item.imgs[0] 
+                            : `${axios.defaults.baseURL}/api/file?id=${item.imgs[0]}`}
                         alt={item.title}
                     />
                     {/* Pink gradient overlay on hover */}
@@ -160,20 +170,43 @@ const FancyCard = ({ item }) => {
 
 const Camps = ({ newNotice }) => {
     const [camps, setCamps] = useState([]);
+    const [activeCategory, setActiveCategory] = useState('');
 
     useEffect(() => {
         getCamps();
-    }, [newNotice]);
+    }, [newNotice, activeCategory]);
 
     const getCamps = () => {
-        axios.get('/api/list', { params: {} }).then((res) => {
+        axios.get('/api/list', { params: { category: activeCategory } }).then((res) => {
             if (res.data.code != 0) { message.error(res.data.message); return; }
             setCamps(res.data.data);
         }).catch((error) => { message.error(error.message); });
     };
 
     return (
-        <div style={{ padding: '32px 44px 48px' }}>
+        <div style={{ padding: '24px 44px 48px' }}>
+            <div style={{ marginBottom: '32px', display: 'flex', justifyContent: 'center' }}>
+                <Tabs
+                    activeKey={activeCategory}
+                    onChange={setActiveCategory}
+                    centered
+                    items={CATEGORIES.map(cat => ({
+                        key: cat.key,
+                        label: (
+                            <span style={{ 
+                                fontSize: '16px', 
+                                fontWeight: 600, 
+                                padding: '0 12px',
+                                color: activeCategory === cat.key ? '#c2185b' : '#f48fb1'
+                            }}>
+                                {cat.label}
+                            </span>
+                        ),
+                    }))}
+                    className="fancy-tabs"
+                    style={{ borderBottom: 'none' }}
+                />
+            </div>
             {camps.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: '64px 0', color: '#f48fb1' }}>
                     <div style={{ fontSize: '48px', marginBottom: '16px' }}>🌸</div>
